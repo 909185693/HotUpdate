@@ -2,7 +2,7 @@ echo off
 
 cd ../../../
 echo %cd%
-subwcrev.exe ./ "./Version.config" "./Studio/HotUpdate/Source/HotUpdate/Public/Version.h"
+subwcrev.exe ./ "./Version.config" "./HotUpdate/Source/HotUpdate/Public/Version.h"
 
 set GAME_MAJOR_VERSION=GAME_MAJOR_VERSION
 set GAME_MINOR_VERSION=GAME_MINOR_VERSION

@@ -1,12 +1,12 @@
 @echo off
 
 setlocal ENABLEDELAYEDEXPANSION
-cd ..\..\..\..\..\
+cd ..\..\..\..\
 for /f "tokens=1" %%i in ('git rev-list --all --count') do (
 	set VersionNumber=%%i
 	break
 )
-cd Plugins\Studio\HotUpdate\Batch\Git
+cd Plugins\HotUpdate\Batch\Git
 echo GAME_MAJOR_VERSION: %~1%
 echo GAME_MINOR_VERSION: %~2%
 echo GAME_BUILD_VERSION: %VersionNumber%
