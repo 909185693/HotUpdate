@@ -145,7 +145,7 @@ void UCheckUpdateProxy::Activate()
 #endif
 	HttpReuest->SetURL(ServerAddress);
 	HttpReuest->SetVerb(TEXT("POST"));
-	HttpReuest->SetHeader(TEXT("Content-Type"), TEXT("application/x-www-form-urlencoded"));
+	HttpReuest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
 	HttpReuest->SetTimeout(10.f);
 	HttpReuest->OnProcessRequestComplete().BindUObject(this, &UCheckUpdateProxy::OnCompleted);
 	HttpReuest->SetContentAsString(DataContent);
