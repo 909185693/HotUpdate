@@ -6,11 +6,15 @@
 #include "HotUpdate/Public/Channel.h"
 #include "JsonObjectConverter.h"
 #include "IPlatformFilePak.h"
-#include "HAL/PlatformFilemanager.h"
 #include "Misc/Paths.h"
 #include "Misc/SecureHash.h"
 #include "Misc/FileHelper.h"
 #include "Misc/CoreDelegates.h"
+#if ENGINE_MAJOR_VERSION >= 5
+#include "HAL/PlatformFileManager.h"
+#else
+#include "HAL/PlatformFilemanager.h"
+#endif
 #include "Launch/Resources/Version.h"
 
 
