@@ -1,9 +1,14 @@
 @echo off
 
 setlocal ENABLEDELAYEDEXPANSION
-set P4ServerAddr=%~3%
-p4 -C utf8 -p %P4ServerAddr% -u %~4% -p %~5% -c NHJ_Airship
-p4 set P4PORT=%P4ServerAddr%
+set P4Server=%~3%
+set P4Username=%~4%
+set P4Password=%~5%
+set P4Workspaces=%~6%
+p4 set P4PORT=%P4Server%
+p4 set P4USER=%P4Username%
+echo %P4Password%|p4 login
+p4 set P4CLIENT=%P4Workspaces%
 for /f "tokens=2 delims= " %%i in ('p4 changes -m1 #have') do (
 	set VersionNumber=%%i
 	break

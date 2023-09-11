@@ -55,7 +55,10 @@ public class HotUpdate : ModuleRules
             string P4Password;
             Config.GetString(Section, "P4Password", out P4Password);
 
-            Arguments += P4Server + " " + P4Username + " " + P4Password + " ";
+            string P4Workspaces;
+            Config.GetString(Section, "P4Workspaces", out P4Workspaces);
+
+            Arguments += P4Server + " " + P4Username + " " + P4Password + " " + P4Workspaces + " ";
         }
         else if (VersionController == "Subversion")
         {

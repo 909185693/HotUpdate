@@ -42,4 +42,7 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = Build, meta = (EditConditionHides, EditCondition = "VersionController==EVersionController::Perforce"))
 	FString P4Password;
+
+	UPROPERTY(Config, EditAnywhere, Category = Build, meta = (EditConditionHides, EditCondition = "VersionController==EVersionController::Perforce"))
+	FString P4Workspaces;
 };
