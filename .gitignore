@@ -25,6 +25,7 @@
 *.la
 #*.lib
 #*.dll
+Binaries/**/UE4*
 
 # Executables
 *.exe

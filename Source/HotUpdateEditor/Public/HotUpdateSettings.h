@@ -20,7 +20,7 @@ enum class EVersionController : uint8
  * UHotUpdateSettings
  */
 UCLASS(Config = HotUpdate, DefaultConfig, Meta = (DisplayName = "HotUpdate"))
-class HOTUPDATE_API UHotUpdateSettings : public UObject
+class HOTUPDATEEDITOR_API UHotUpdateSettings : public UObject
 {
 	GENERATED_BODY()
 	
@@ -45,4 +45,17 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = Build, meta = (EditConditionHides, EditCondition = "VersionController==EVersionController::Perforce"))
 	FString P4Workspaces;
+
+#if WITH_EDITORONLY_DATA
+	UPROPERTY(Config, EditAnywhere, Category = Build, BlueprintSetter = SetReleaseChannel)
+	FName ReleaseChannel;
+
+	UPROPERTY(Config, EditAnywhere, Category = Build)
+	TArray<FName> CustomChannels;
+#endif
+
+protected:
+
+	UFUNCTION(BlueprintSetter)
+	void SetReleaseChannel(const FName NewReleaseChannel);
 };

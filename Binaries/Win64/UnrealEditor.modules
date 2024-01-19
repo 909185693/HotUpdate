@@ -2,6 +2,7 @@
 	"BuildId": "27405482",
 	"Modules": 
 	{
-		"HotUpdate": "UnrealEditor-HotUpdate.dll"
+		"HotUpdate": "UnrealEditor-HotUpdate.dll",
+		"HotUpdateEditor": "UnrealEditor-HotUpdateEditor.dll"
 	}
 }
