@@ -27,7 +27,12 @@ public:
 	}
 
 	virtual void ShutdownModule() override
-	{
+	{	
+		// Register the details customizer
+		FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
+		PropertyModule.UnregisterCustomClassLayout(UHotUpdateSettings::StaticClass()->GetFName());
+		PropertyModule.NotifyCustomizationModuleChanged();
+
 		UnregisterSettings();
 	}
 
