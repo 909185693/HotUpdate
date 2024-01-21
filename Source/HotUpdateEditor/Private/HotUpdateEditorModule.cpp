@@ -3,7 +3,6 @@
 #include "HotUpdateEditorModule.h"
 #include "HotUpdateSettings.h"
 #include "HotUpdateSettingsDetailCustomization.h"
-#include "HotUpdateSettingsPropertyTypeCustomization.h"
 
 #if WITH_EDITOR
 #include "ISettingsModule.h"
@@ -22,7 +21,6 @@ public:
 		// Register the details customizer
 		FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
 		PropertyModule.RegisterCustomClassLayout(UHotUpdateSettings::StaticClass()->GetFName(), FOnGetDetailCustomizationInstance::CreateStatic(&FHotUpdateSettingsDetailCustomization::MakeInstance));
-		PropertyModule.RegisterCustomPropertyTypeLayout(UHotUpdateSettings::StaticClass()->GetFName(), FOnGetPropertyTypeCustomizationInstance::CreateStatic(&FHotUpdateSettingsPropertyTypeCustomization::MakeInstance));
 		PropertyModule.NotifyCustomizationModuleChanged();
 
 		RegisterSettings();

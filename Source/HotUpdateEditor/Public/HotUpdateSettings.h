@@ -47,15 +47,10 @@ public:
 	FString P4Workspaces;
 
 #if WITH_EDITORONLY_DATA
-	UPROPERTY(Config, EditAnywhere, Category = Build, BlueprintSetter = SetReleaseChannel)
+	UPROPERTY(Config, EditAnywhere, Category = Build)
 	FName ReleaseChannel;
 
 	UPROPERTY(Config, EditAnywhere, Category = Build)
 	TArray<FName> CustomChannels;
 #endif
-
-protected:
-
-	UFUNCTION(BlueprintSetter)
-	void SetReleaseChannel(const FName NewReleaseChannel);
 };
