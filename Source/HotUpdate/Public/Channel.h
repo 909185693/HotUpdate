@@ -1,3 +1,3 @@
 #pragma once
 
-#define RELEASE_CHANNEL	TEXT("GooglePlayAbroad")
+#define RELEASE_CHANNEL	TEXT("TapTapChina")

@@ -26,7 +26,7 @@ public class HotUpdate : ModuleRules
             var ConfigFileReference = new FileReference(ConfigFilePath);
             var ConfigFile = FileReference.Exists(ConfigFileReference) ? new ConfigFile(ConfigFileReference) : new ConfigFile();
             var Config = new ConfigHierarchy(new[] { ConfigFile });
-            const string Section = "/Script/HotUpdate.HotUpdateSettings";
+            const string Section = "/Script/HotUpdateEditor.HotUpdateSettings";
 
             int MajorVersion = 0;
             Config.GetInt32(Section, "MajorVersion", out MajorVersion);

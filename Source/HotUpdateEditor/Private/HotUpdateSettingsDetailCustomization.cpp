@@ -97,7 +97,7 @@ FName FHotUpdateSettingsDetailCustomization::GetReleaseChannel() const
 		{
 			if (ChannelData.Contains(TEXT("#define RELEASE_CHANNEL")))
 			{
-				return FName(ChannelData.RightChop(31).RightChop(2));
+				return FName(ChannelData.RightChop(30).LeftChop(2));
 			}
 		}
 	}
