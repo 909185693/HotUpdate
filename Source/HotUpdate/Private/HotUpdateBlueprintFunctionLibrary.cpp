@@ -15,7 +15,7 @@
 #else
 #include "HAL/PlatformFilemanager.h"
 #endif
-#include "Launch/Resources/Version.h"
+#include "Runtime/Launch/Resources/Version.h"
 
 
 #define VERSION_FILE_PATH FPaths::Combine(*FPaths::ProjectSavedDir(), TEXT("Version.ini"))
