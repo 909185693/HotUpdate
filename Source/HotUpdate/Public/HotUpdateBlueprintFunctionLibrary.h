@@ -40,6 +40,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = GameVersion)
 	static FString GetReleaseChannel();
+
+	UFUNCTION(BlueprintCallable, Category = GameVersion, Meta = (WorldContext = "WorldContextObject"))
+	static void StartGame(UObject* WorldContextObject);
 };
 
 /**

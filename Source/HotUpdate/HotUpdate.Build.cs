@@ -20,13 +20,8 @@ public class HotUpdate : ModuleRules
 
         if (!Target.bBuildEditor)
         {
-#if !__MonoCS__
-            var ProjectDir = Target.ProjectFile.Directory;
-            var ConfigFilePath = ProjectDir + "/Config/DefaultHotUpdate.ini";
-            var ConfigFileReference = new FileReference(ConfigFilePath);
-            var ConfigFile = FileReference.Exists(ConfigFileReference) ? new ConfigFile(ConfigFileReference) : new ConfigFile();
-            var Config = new ConfigHierarchy(new[] { ConfigFile });
-            const string Section = "/Script/HotUpdateEditor.HotUpdateSettings";
+            const string Section = "/Script/HotUpdate.HotUpdateSettings";
+            ConfigHierarchy Config = ConfigCache.ReadHierarchy(ConfigHierarchyType.Game, DirectoryReference.FromFile(Target.ProjectFile), Target.Platform, Target.CustomConfig);
 
             int MajorVersion = 0;
             Config.GetInt32(Section, "MajorVersion", out MajorVersion);
@@ -88,9 +83,21 @@ public class HotUpdate : ModuleRules
                 Proc.WaitForExit();
 
                 System.Console.WriteLine("Auto write version file by " + VersionController);
-                System.Console.WriteLine("---------------------------------------------------------------");
             }
-#endif
+
+            string ReleaseChannel;
+            Config.GetString(Section, "ReleaseChannel", out ReleaseChannel);
+            
+            string ChannelFilepath = Path.Combine(PluginDirectory, "Source/HotUpdate/Public/Channel.h");
+            using (StreamWriter Writer = new StreamWriter(ChannelFilepath))
+            {
+                Writer.WriteLine("#pragma once");
+                Writer.WriteLine("");
+                Writer.WriteLine(String.Format("#define RELEASE_CHANNEL\tTEXT(\"{0}\")", ReleaseChannel));
+
+                System.Console.WriteLine("Current build ReleaseChannel: " + ReleaseChannel);
+            }
+            System.Console.WriteLine("---------------------------------------------------------------");
         }
 
         PublicIncludePaths.AddRange(

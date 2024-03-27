@@ -19,14 +19,17 @@ enum class EVersionController : uint8
 /**
  * UHotUpdateSettings
  */
-UCLASS(Config = HotUpdate, DefaultConfig, Meta = (DisplayName = "HotUpdate"))
-class HOTUPDATEEDITOR_API UHotUpdateSettings : public UObject
+UCLASS(Config = Game, DefaultConfig, Meta = (DisplayName = "HotUpdate"))
+class HOTUPDATE_API UHotUpdateSettings : public UObject
 {
 	GENERATED_BODY()
 	
 public:
 	UPROPERTY(Config, EditAnywhere, Category = Build)
-	int32 MajorVersion;
+	bool bEnable;
+
+	UPROPERTY(Config, EditAnywhere, Category = Build)
+	FString ServerAddress;
 
 	UPROPERTY(Config, EditAnywhere, Category = Build)
 	int32 MinorVersion;
@@ -45,6 +48,12 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, Category = Build, meta = (EditConditionHides, EditCondition = "VersionController==EVersionController::Perforce"))
 	FString P4Workspaces;
+
+	UPROPERTY(Config, EditAnywhere, Category = Build)
+	FString GameDefaultMap;
+
+	UPROPERTY(Config, EditAnywhere, Category = Build)
+	FString LocalMapOptions;
 
 #if WITH_EDITORONLY_DATA
 	UPROPERTY(Config, EditAnywhere, Category = Build)

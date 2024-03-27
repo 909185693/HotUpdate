@@ -1,6 +1,7 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "HotUpdateBlueprintFunctionLibrary.h"
+#include "HotUpdateSettings.h"
 #include "HotUpdateModule.h"
 #include "HotUpdate/Public/Version.h"
 #include "HotUpdate/Public/Channel.h"
@@ -104,22 +105,40 @@ FString UGameVersionManager::GetReleaseChannel()
 	return RELEASE_CHANNEL;
 }
 
+void UGameVersionManager::StartGame(UObject* WorldContextObject)
+{
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	if (!IsValid(World))
+	{
+		return;
+	}
+
+	const UHotUpdateSettings* HotUpdateSettings = GetDefault<UHotUpdateSettings>();
+	check(HotUpdateSettings);
+
+	World->ServerTravel(FString::Printf(TEXT("%s%s"), *HotUpdateSettings->GameDefaultMap, *HotUpdateSettings->LocalMapOptions));
+}
+
 /*
 * 检查更新
 */
 void UCheckUpdateProxy::Activate()
 {
-	bool bEnable = false;
-	if (!GConfig->GetBool(TEXT("HotUpdate"), TEXT("bEnable"), bEnable, GEngineIni))
+	const UHotUpdateSettings* HotUpdateSettings = GetDefault<UHotUpdateSettings>();
+	check(HotUpdateSettings);
+
+	if (!HotUpdateSettings->bEnable)
 	{
+		UE_LOG(LogHotUpdate, Warning, TEXT("Hot update not enabled"));
+
 		SetReadyToDestroy();
 		return;
 	}
 
-	FString ServerAddress;
-	if (!GConfig->GetString(TEXT("HotUpdate"), TEXT("ServerAddress"), ServerAddress, GEngineIni))
+	if (HotUpdateSettings->ServerAddress == TEXT(""))
 	{
-		UE_LOG(LogHotUpdate, Warning, TEXT("Hot update enabled, but ServerAddress is null."));
+		UE_LOG(LogHotUpdate, Warning, TEXT("Hot update enabled, but ServerAddress is empty"));
+
 		SetReadyToDestroy();
 		return;
 	}
@@ -143,7 +162,7 @@ void UCheckUpdateProxy::Activate()
 #else
 	TSharedRef<IHttpRequest> HttpReuest = FHttpModule::Get().CreateRequest();
 #endif
-	HttpReuest->SetURL(ServerAddress);
+	HttpReuest->SetURL(HotUpdateSettings->ServerAddress);
 	HttpReuest->SetVerb(TEXT("POST"));
 	HttpReuest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
 	HttpReuest->SetTimeout(10.f);

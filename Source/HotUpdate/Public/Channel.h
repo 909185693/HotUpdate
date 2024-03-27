@@ -1,3 +1,3 @@
 #pragma once
 
-#define RELEASE_CHANNEL	TEXT("TapTapChina")
+#define RELEASE_CHANNEL	TEXT("Tests")
